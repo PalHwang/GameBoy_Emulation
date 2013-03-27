@@ -1,4 +1,6 @@
+
 #include "MMU.h"
+
 
 struct clock{
 		byte m;
@@ -30,7 +32,9 @@ class z80{
 
 public: 
 		z80();
-		void (z80::*_map[255])();
+		void (z80::*_map[256])();
+		void (z80::* _cbmap[256])();
+
 
         void reset();
 	    void print_status();
@@ -492,13 +496,18 @@ public:
 	   void fz(byte i,byte as);
 	   void MAPcb();
 	   void XX();
-	   void NOP();
-	   
+	   void NOP(); 
+
+/*--------------Register------------*/
 private:
 	    MMU _mmu;
 		clock _clock;
 		registers _r;
 		byte _halt;
+		friend class MMU;
 		
 
+	   
+
 };
+

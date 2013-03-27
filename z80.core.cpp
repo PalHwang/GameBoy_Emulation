@@ -2,9 +2,9 @@
 //
 // z80.cpp : Defines the entry point for the console application.
 //
-
 #include "stdafx.h"
 #include "z80.core.h"
+
 
 z80::z80(){
 	_clock.m=0;
@@ -321,6 +321,318 @@ z80::z80(){
 	_map[253]=&z80::XX; //FD
 	_map[254]=&z80::CPn; //FE
 	_map[255]=&z80::RST38; //FF
+
+
+
+
+	/*------------Extended OpCode Mapping------------------*/
+
+	/*--------------------CB0x--------------------*/
+	
+	_cbmap[0]=&z80::RLCr_b;  //CB00
+	_cbmap[1]=&z80::RLCr_c; //CB01
+	_cbmap[2]=&z80::RLCr_d; //CB02
+	_cbmap[3]=&z80::RLCr_e; //CB03
+	_cbmap[4]=&z80::RLCr_h; //CB04
+	_cbmap[5]=&z80::RLCr_l;  //CB05
+	_cbmap[6]=&z80::RLCHL;  //CB06
+	_cbmap[7]=&z80::RLCr_a; //CB07
+	_cbmap[8]=&z80::RRCr_b; //CB08
+	_cbmap[9]=&z80::RRCr_c; //CB09
+	_cbmap[10]=&z80::RRCr_d; //CB0A
+	_cbmap[11]=&z80::RRCr_e; //CB0B
+	_cbmap[12]=&z80::RRCr_h; //CB0C
+	_cbmap[13]=&z80::RRCr_l; //CB0D
+	_cbmap[14]=&z80::RRCHL; //CB0E
+	_cbmap[15]=&z80::RRCr_a; //CB0F
+
+	/*--------------------CB1x--------------*/
+
+	_cbmap[16]=&z80::RLr_b; //CB10
+	_cbmap[17]=&z80::RLr_c; //CB11
+	_cbmap[18]=&z80::RLr_d;  //CB12
+	_cbmap[19]=&z80::RLr_e; //CB13
+	_cbmap[20]=&z80::RLr_h; //CB14
+	_cbmap[21]=&z80::RLr_l; //CB15
+	_cbmap[22]=&z80::RLHL; //CB16
+	_cbmap[23]=&z80::RLr_a; //CB17
+	_cbmap[24]=&z80::RRr_b; //CB18
+	_cbmap[25]=&z80::RRr_c; //CB19
+	_cbmap[26]=&z80::RRr_d; //CB1A
+	_cbmap[27]=&z80::RRr_e; //CB1B
+	_cbmap[28]=&z80::RRr_h; //CB1C
+	_cbmap[29]=&z80::RRr_l; //CB1D
+	_cbmap[30]=&z80::RRHL; //CB1E
+	_cbmap[31]=&z80::RRr_a; //CB1F
+
+	/*---------------------CB2x------------------*/
+
+	_cbmap[32]=&z80::SLAr_b; //CB20
+	_cbmap[33]=&z80::SLAr_c; //CB21
+	_cbmap[34]=&z80::SLAr_d; //CB22
+	_cbmap[35]=&z80::SLAr_e; //CB23
+	_cbmap[36]=&z80::SLAr_h; //CB24
+	_cbmap[37]=&z80::SLAr_l; //CB25
+	_cbmap[38]=&z80::XX; //CB26
+	_cbmap[39]=&z80::SLAr_a; //CB27
+	_cbmap[40]=&z80::SRAr_b; //CB28
+	_cbmap[41]=&z80::SRAr_c; //CB29
+	_cbmap[42]=&z80::SRAr_d; //CB2A
+	_cbmap[43]=&z80::SRAr_e; //CB2B
+	_cbmap[44]=&z80::SRAr_h; //CB2C
+	_cbmap[45]=&z80::SRAr_l; //CB2D
+	_cbmap[46]=&z80::XX; //CB2E
+	_cbmap[47]=&z80::SRAr_a; //CB2F
+
+	/*-----------------------CB3x-------------------*/
+	_cbmap[48]=&z80::SWAPr_b; //CB30
+	_cbmap[49]=&z80::SWAPr_c; //CB31
+	_cbmap[50]=&z80::SWAPr_d; //CB32
+	_cbmap[51]=&z80::SWAPr_e; //CB33
+	_cbmap[52]=&z80::SWAPr_h; //CB34
+	_cbmap[53]=&z80::SWAPr_l; //CB35
+	_cbmap[54]=&z80::XX; //CB36
+	_cbmap[55]=&z80::SWAPr_a; //CB37
+	_cbmap[56]=&z80::SRLr_b; //CB38
+	_cbmap[57]=&z80::SRLr_c; //CB39
+	_cbmap[58]=&z80::SRLr_d; //CB3A
+	_cbmap[59]=&z80::SRLr_e; //CB3B
+	_cbmap[60]=&z80::SRLr_h; //CB3C
+	_cbmap[61]=&z80::SRLr_l; //CB3D
+	_cbmap[62]=&z80::XX; //CB3E
+	_cbmap[63]=&z80::SRLr_a; //CB3F
+
+	/*---------------------CB4x-------------------*/
+
+	_cbmap[64]=&z80::BIT0b; //CB40
+	_cbmap[65]=&z80::BIT0c; //CB41
+	_cbmap[66]=&z80::BIT0d; //CB42
+	_cbmap[67]=&z80::BIT0e; //CB43
+	_cbmap[68]=&z80::BIT0h; //CB44
+	_cbmap[69]=&z80::BIT0l; //CB45
+	_cbmap[70]=&z80::BIT0m; //CB46
+	_cbmap[71]=&z80::BIT0a; //CB47
+	_cbmap[72]=&z80::BIT1b; //CB48
+	_cbmap[73]=&z80::BIT1c; //CB49
+	_cbmap[74]=&z80::BIT1d; //CB4A
+	_cbmap[75]=&z80::BIT1e; //CB4B
+	_cbmap[76]=&z80::BIT1h; //CB4C
+	_cbmap[77]=&z80::BIT1l; //CB4D
+	_cbmap[78]=&z80::BIT1m; //CB4E
+	_cbmap[79]=&z80::BIT1a; //CB4F
+  
+	/*----------------------CB5x-----------------*/
+
+	_cbmap[80]=&z80::BIT2b; //CB50
+	_cbmap[81]=&z80::BIT2c; //CB51
+	_cbmap[82]=&z80::BIT2d; //CB52
+	_cbmap[83]=&z80::BIT2e; //CB53
+	_cbmap[84]=&z80::BIT2h; //CB54
+	_cbmap[85]=&z80::BIT2l; //CB55
+	_cbmap[86]=&z80::BIT2m; //CB56
+	_cbmap[87]=&z80::BIT2a; //CB57
+	_cbmap[88]=&z80::BIT3b; //CB58
+	_cbmap[89]=&z80::BIT3c; //CB59
+	_cbmap[90]=&z80::BIT3d; //CB5A
+	_cbmap[91]=&z80::BIT3e; //CB5B
+	_cbmap[92]=&z80::BIT3h; //CB5C
+	_cbmap[93]=&z80::BIT3l; //CB5D
+	_cbmap[94]=&z80::BIT3m; //CB5E
+	_cbmap[95]=&z80::BIT3a; //CB5F
+
+	/*---------------------CB6x----------------*/
+
+	_cbmap[96]=&z80::BIT4b; //CB60
+	_cbmap[97]=&z80::BIT4c; //CB61
+	_cbmap[98]=&z80::BIT4d; //CB62
+	_cbmap[99]=&z80::BIT4e; //CB63
+	_cbmap[100]=&z80::BIT4h; //CB64
+	_cbmap[101]=&z80::BIT4l; //CB65
+	_cbmap[102]=&z80::BIT4m; //CB66
+	_cbmap[103]=&z80::BIT4a; //CB67
+	_cbmap[104]=&z80::BIT5b; //CB68
+	_cbmap[105]=&z80::BIT5c; //CB69
+	_cbmap[106]=&z80::BIT5d; //CB6A
+	_cbmap[107]=&z80::BIT5e; //CB6B
+	_cbmap[108]=&z80::BIT5h; //CB6C
+	_cbmap[109]=&z80::BIT5l; //CB6D
+	_cbmap[110]=&z80::BIT5m; //CB6E
+	_cbmap[111]=&z80::BIT5a; //CB6F
+
+
+	/*--------------------CB7x----------------*/
+
+	_cbmap[112]=&z80::BIT6b; //CB70
+	_cbmap[113]=&z80::BIT6c; //CB71
+	_cbmap[114]=&z80::BIT6d; //CB72
+	_cbmap[115]=&z80::BIT6e; //CB73
+	_cbmap[116]=&z80::BIT6h; //CB74
+	_cbmap[117]=&z80::BIT6l; //CB75
+	_cbmap[118]=&z80::BIT6m; //CB76
+	_cbmap[119]=&z80::BIT6a; //CB77
+	_cbmap[120]=&z80::BIT7b; //CB78
+	_cbmap[121]=&z80::BIT7c; //CB79
+	_cbmap[122]=&z80::BIT7d; //CB7A
+	_cbmap[123]=&z80::BIT7e; //CB7B
+	_cbmap[124]=&z80::BIT7h; //CB7C
+	_cbmap[125]=&z80::BIT7l; //CB7D
+	_cbmap[126]=&z80::BIT7m; //CB7E
+	_cbmap[127]=&z80::BIT7a; //CB7F
+
+	/*----------------CB8x----------------*/
+
+	_cbmap[128]=&z80::XX; //CB80
+	_cbmap[129]=&z80::XX; //CB81 
+	_cbmap[130]=&z80::XX; //CB82
+	_cbmap[131]=&z80::XX; //CB83
+	_cbmap[132]=&z80::XX; //CB84
+	_cbmap[133]=&z80::XX; //CB85
+	_cbmap[134]=&z80::XX; //CB86
+	_cbmap[135]=&z80::XX; //CB87
+	_cbmap[136]=&z80::XX; //CB88
+	_cbmap[137]=&z80::XX; //CB89
+	_cbmap[138]=&z80::XX; //CB8A
+	_cbmap[139]=&z80::XX; //CB8B
+	_cbmap[140]=&z80::XX; //CB8C
+	_cbmap[141]=&z80::XX; //CB8D
+	_cbmap[142]=&z80::XX; //CB8E
+	_cbmap[143]=&z80::XX; //CB8F
+
+
+	/*------------------CB9x--------------*/
+
+	_cbmap[144]=&z80::XX; //CB90
+	_cbmap[145]=&z80::XX; //CB91
+	_cbmap[146]=&z80::XX; //CB92
+	_cbmap[147]=&z80::XX; //CB93
+	_cbmap[148]=&z80::XX; //CB94
+	_cbmap[149]=&z80::XX; //CB95
+	_cbmap[150]=&z80::XX; //CB96
+	_cbmap[151]=&z80::XX; //CB97
+	_cbmap[152]=&z80::XX; //CB98
+	_cbmap[153]=&z80::XX; //CB99
+	_cbmap[154]=&z80::XX; //CB9A
+	_cbmap[155]=&z80::XX; //CB9B
+	_cbmap[156]=&z80::XX; //CB9C
+	_cbmap[157]=&z80::XX; //CB9D
+	_cbmap[158]=&z80::XX; //CB9E
+	_cbmap[159]=&z80::XX; //CB9F
+
+	/*---------------CBAx---------------*/
+
+	_cbmap[160]=&z80::XX; //CBA0
+	_cbmap[161]=&z80::XX; //CBA1
+	_cbmap[162]=&z80::XX; //CBA2
+	_cbmap[163]=&z80::XX; //CBA3
+	_cbmap[164]=&z80::XX; //CBA4
+	_cbmap[165]=&z80::XX; //CBA5
+	_cbmap[166]=&z80::XX; //CBA6
+	_cbmap[167]=&z80::XX; //CBA7
+	_cbmap[168]=&z80::XX; //CBA8
+	_cbmap[169]=&z80::XX; //CBA9
+	_cbmap[170]=&z80::XX; //CBAA
+	_cbmap[171]=&z80::XX; //CBAB
+	_cbmap[172]=&z80::XX; //CBAC
+	_cbmap[173]=&z80::XX; //CBAD
+	_cbmap[174]=&z80::XX; //CBAE
+	_cbmap[175]=&z80::XX; //CBAF
+
+	/*---------------CBBx-------------*/
+
+	_cbmap[176]=&z80::XX; //CBB0
+	_cbmap[177]=&z80::XX; //CBB1
+	_cbmap[178]=&z80::XX; //CBB2
+	_cbmap[179]=&z80::XX; //CBB3
+	_cbmap[180]=&z80::XX; //CBB4
+	_cbmap[181]=&z80::XX; //CBB5
+	_cbmap[182]=&z80::XX; //CBB6
+	_cbmap[183]=&z80::XX; //CBB7
+	_cbmap[184]=&z80::XX; //CBB8
+	_cbmap[185]=&z80::XX; //CBB9
+	_cbmap[186]=&z80::XX; //CBBA
+	_cbmap[187]=&z80::XX; //CBBB
+	_cbmap[188]=&z80::XX; //CBBC
+	_cbmap[189]=&z80::XX; //CBBD
+	_cbmap[190]=&z80::XX; //CBBE
+	_cbmap[191]=&z80::XX; //CBBF
+
+	/*-----------------CBCx-------------*/
+
+	_cbmap[192]=&z80::XX; //CBC0
+	_cbmap[193]=&z80::XX; //CBC1
+	_cbmap[194]=&z80::XX; //CBC2
+	_cbmap[195]=&z80::XX; //CBC3
+	_cbmap[196]=&z80::XX; //CBC4
+	_cbmap[197]=&z80::XX; //CBC5
+	_cbmap[198]=&z80::XX; //CBC6
+	_cbmap[199]=&z80::XX; //CBC7
+	_cbmap[200]=&z80::XX; //CBC8
+	_cbmap[201]=&z80::XX; //CBC9
+	_cbmap[202]=&z80::XX; //CBCA
+	_cbmap[203]=&z80::XX; //CBCB
+	_cbmap[204]=&z80::XX; //CBCC
+	_cbmap[205]=&z80::XX; //CBCD
+	_cbmap[206]=&z80::XX; //CBCE
+	_cbmap[207]=&z80::XX; //CBCF
+
+	/*--------------CBDx----------------*/
+
+	_cbmap[208]=&z80::XX; //CBD0
+	_cbmap[209]=&z80::XX; //CBD1
+	_cbmap[210]=&z80::XX; //CBD2
+	_cbmap[211]=&z80::XX; //CBD3
+	_cbmap[212]=&z80::XX; //CBD4
+	_cbmap[213]=&z80::XX; //CBD5
+	_cbmap[214]=&z80::XX; //CBD6
+	_cbmap[215]=&z80::XX; //CBD7
+	_cbmap[216]=&z80::XX; //CBD8
+	_cbmap[217]=&z80::XX; //CBD9
+	_cbmap[218]=&z80::XX; //CBDA
+	_cbmap[219]=&z80::XX; //CBDB
+	_cbmap[220]=&z80::XX; //CBDC
+	_cbmap[221]=&z80::XX; //CBDD
+	_cbmap[222]=&z80::XX; //CBDE
+	_cbmap[223]=&z80::XX; //CBDF
+
+	/*-------------CBEx--------------*/
+	_cbmap[224]=&z80::XX; //CBE0
+	_cbmap[225]=&z80::XX; //CBE1
+	_cbmap[226]=&z80::XX; //CBE2
+	_cbmap[227]=&z80::XX; //CBE3
+	_cbmap[228]=&z80::XX; //CBE4
+	_cbmap[229]=&z80::XX; //CBE5
+	_cbmap[230]=&z80::XX; //CBE6
+	_cbmap[231]=&z80::XX; //CBE7
+	_cbmap[232]=&z80::XX; //CBE8
+	_cbmap[233]=&z80::XX; //CBE9
+	_cbmap[234]=&z80::XX; //CBEA
+	_cbmap[235]=&z80::XX; //CBEB
+	_cbmap[236]=&z80::XX; //CBEC
+	_cbmap[237]=&z80::XX; //CBED
+	_cbmap[238]=&z80::XX; //CBEE
+	_cbmap[239]=&z80::XX; //CBEF
+	
+	/*------------------CBFx-----------------*/
+	_cbmap[240]=&z80::XX; //CBF0
+	_cbmap[241]=&z80::XX; //CBF1
+	_cbmap[242]=&z80::XX; //CBF2
+	_cbmap[243]=&z80::XX; //CBF3
+	_cbmap[244]=&z80::XX; //CBF4
+	_cbmap[245]=&z80::XX; //CBF5
+	_cbmap[246]=&z80::XX; //CBF6
+	_cbmap[247]=&z80::XX; //CBF7
+	_cbmap[248]=&z80::XX; //CBF8
+	_cbmap[249]=&z80::XX; //CBF9
+	_cbmap[250]=&z80::XX; //CBFA
+	_cbmap[251]=&z80::XX; //CBFB
+	_cbmap[252]=&z80::XX; //CBFC
+	_cbmap[253]=&z80::XX; //CBFD
+	_cbmap[254]=&z80::XX; //CBFE
+	_cbmap[255]=&z80::XX; //CBFF
+
+
+
+
 
 
 
@@ -2160,6 +2472,12 @@ void z80::BIT4d(){
 	_r.t=8;
 };
 
+void z80::BIT4e(){
+	fz(_r.e&0x10);
+	_r.m=2;
+	_r.t=8;
+};
+
 void z80::BIT4h(){
 	fz(_r.h&0x10);
 	_r.m=2;
@@ -3533,6 +3851,7 @@ void z80::XX(){};
 void z80::fz(byte i){};
 void z80::fz(byte i,byte as){};
 void z80::MAPcb(){};
+
 
 void z80::reset(){
 	_clock.m=0;
